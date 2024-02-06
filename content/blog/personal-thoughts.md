@@ -3,7 +3,7 @@ title: "#3 Am I doing it wrong?"
 date: 2024-02-06
 # lastmod: 2022-07-15T15:03:31+02:00
 draft: false
-summary: various thoughts
+summary: Some personal toughts.
 # categories: [curated lists]
 tags: [personal, goals]
 # ShowToc: true

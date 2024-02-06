@@ -58,4 +58,4 @@ As for Scala, the motivations are slightly different. Scala is a niche programmi
 
 Learning Scala is a bit tough, to be honest. They say it's not the easiest language, and I agree—it's a bit challenging. Also, I don't use Scala at work, so I only practice in my free time, which isn't a whole lot and most probably it's likely insufficient. But, you know what, I'm still sticking to my plan of learning it, at least for now.
 
-In the next two blog posts, I'm gonna dive into what I'm picking up about Scala and Spark and I'll also try to share what's inside the courses.
+In two of the next blog posts (not necessarily the next two), I'm gonna dive into what I'm picking up about Scala and Spark and I'll also try to share what's inside the courses.

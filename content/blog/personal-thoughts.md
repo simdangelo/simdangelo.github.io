@@ -7,7 +7,7 @@ summary: Some personal toughts.
 # categories: [curated lists]
 tags: [personal, goals]
 # ShowToc: true
-# weight: 1
+weight: 2
 # cover:
 #   image: "images/burns-mystery-box.jpg"
 #   alt: "burns-mystery-box.jpg"

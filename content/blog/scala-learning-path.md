@@ -3,7 +3,7 @@ title: "#4 Scala learning path"
 date: 2024-02-16
 # lastmod: 2022-07-15T15:03:31+02:00
 draft: false
-summary: scala contents.
+summary: Scala course contents.
 # categories: [curated lists]
 tags: [coding, goals]
 # ShowToc: true

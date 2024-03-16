@@ -1,13 +1,13 @@
 ---
 title: "#4 Scala learning path"
-date: 2024-02-16 to do
+date: 2024-02-16
 # lastmod: 2022-07-15T15:03:31+02:00
 draft: false
 summary: scala contents.
 # categories: [curated lists]
 tags: [coding, goals]
 # ShowToc: true
-weight: 2
+# weight: 2
 # cover:
 #   image: "images/burns-mystery-box.jpg"
 #   alt: "burns-mystery-box.jpg"

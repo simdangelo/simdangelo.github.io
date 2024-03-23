@@ -33,7 +33,7 @@ After the installation open it and, before starting any project, go in the **Plu
 
 After installing Scala plugin, go in the **Projects** tab and select **New Project** to open the new project window:
 
-![Untitled](./images/Untitled.png)
+![Untitled](images/Untitled.png)
 
 In this panel:
 

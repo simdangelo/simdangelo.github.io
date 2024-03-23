@@ -15,8 +15,6 @@ tags: [coding, spark, tutorial]
 #   relative: true
 ---
 
-# How to run Spark Applications with Scala on your local machine
-
 In this article we’ll see how to set your local machine to run efficiently **Spark Application** with **Scala API** in **IntelliJ IDE**.
 
 This guide has been tested on macOS 14.3 and on Windows 11.

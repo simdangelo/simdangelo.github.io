@@ -51,7 +51,7 @@ In this panel:
 
 What you should see after a while is the a window with your new project like:
 
-![Untitled](./images/Untitled%203.png)
+![Untitled](images/Untitled%203.png)
 
 # 3. Install library dependencies
 

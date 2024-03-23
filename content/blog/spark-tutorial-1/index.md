@@ -113,7 +113,7 @@ The final result you should see in the console is:
 
 ![Untitled](images/Untitled%206.png)
 
-# 5. Full code:
+# 5. Full code
 
 ```scala
 import org.apache.spark.sql.SparkSession

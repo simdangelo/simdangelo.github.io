@@ -147,7 +147,7 @@ Let’s explore various solutions to create a DF by hand.
     
     After calling this function in the `main` function of the Scala project, we’ll see in the console the result:
     
-    <img src="images/Untitled%201.png" alt="image" width=80% height="auto">
+    <img src="images/Untitled%201.png" alt="image" width=89% height="auto">
 
     
     This method can be applied to a **sequence** of objects (`Seq`), but to access the `toDF()` method we have to import `spark.implicits._`**.**
@@ -179,7 +179,7 @@ Let’s explore various solutions to create a DF by hand.
     ```
     
     <!-- ![Untitled](images/Untitled%202.png) -->
-    <img src="images/Untitled%202.png" alt="image" width=80% height="auto">
+    <img src="images/Untitled%202.png" alt="image" width=90% height="auto">
     
     - Note that now `orders` object is not anymore a  `Seq[(String, String, Int, String)]`, but it’s a  `Seq[Row]`.
     - Note that i was not able to cast `order_date` as `DateType` directly in the schema because otherwise Spark returns an error (I don’t know if it’s possible to do that in some other ways). It’s possible of course to cast to `DateType` after creating the DF.
@@ -249,7 +249,7 @@ def readCsv_v1(): Unit = {
 
 The meaning of all the `.options()` is quite straightforward, so I’ll not explain them. The result is:
 
-![Untitled](images/Untitled%203.png)
+<img src="images/Untitled%203.png" alt="image" width=80% height="auto">
 
 Note that **it’s not suggested to use** `.option("inferSchema", "true")` **in production environment since we have no control on the schema**.
 
@@ -283,7 +283,7 @@ def readCsv_v2(): Unit = {
 
 Note that, if you cast a column as `DateType`, I suggested to set the option `.option("dateFormat", "dd-MM-yyyy")` with the correct date format. Without it, I got weird results. The results is:
 
-![Untitled](images/Untitled%204.png)
+<img src="images/Untitled%204.png" alt="image" width=80% height="auto">
 
 ## 2.4. Create a DataFrame from JSON file
 

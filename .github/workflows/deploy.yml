@@ -1,41 +1,38 @@
-name: Build and Deploy Site
-
+name: Publish to GH Pages
 on:
   push:
     branches:
       - main
   pull_request:
-    branches:
-      - main
 
 jobs:
-  build-and-deploy-site:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v2
+      - name: Checkout source
+        uses: actions/checkout@v3
         with:
           submodules: true
-          fetch-depth: 0
 
-      - name: Setup Hugo
-        uses: peaceiris/actions-hugo@v2
+      - name: Checkout destination
+        uses: actions/checkout@v3
+        if: github.ref == 'refs/heads/main'
         with:
-          hugo-version: 'latest'
+          ref: gh-pages
+          path: built-site
 
-      - name: Build site with Hugo
-        run: hugo --minify
+      # - name: Setup Hugo
+      #   run: |
+      #     curl -L -o /tmp/hugo.tar.gz 'https://github.com/gohugoio/hugo/releases/download/v0.110.0/hugo_extended_0.110.0_linux-amd64.tar.gz'
+      #     tar -C ${RUNNER_TEMP} -zxvf /tmp/hugo.tar.gz hugo          
+      # - name: Build
+      #   run: ${RUNNER_TEMP}/hugo
 
-      - name: Check HTML
-        uses: chabad360/htmlproofer@master
-        with:
-          directory: "./public"
-          arguments: --only-4xx --check-favicon --check-html --assume-extension --empty-alt-ignore --disable-external
-        continue-on-error: true
-
-      - name: Deploy to GitHub Pages
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public
+      - name: Deploy
+        if: github.ref == 'refs/heads/main'
+        run: |
+          cp -R public/* ${GITHUB_WORKSPACE}/built-site/
+          cd ${GITHUB_WORKSPACE}/built-site
+          git add .
+          git commit -m 'Updated site'
+          git push

@@ -7,7 +7,6 @@ summary: Periodic updates.
 tags: [monthly, goals]
 # weight: 2
 ---
-prova
 
 I have never set publicly my goals for the future months. In my very first blog post I just said I would do some kind of report every couple of months, looking back at what went well and what I need to improve. So, I cannot give marks or stuff like that to precise goals.
 For this reason, I'm going to give some opinions with marks to some topics about what happened in my work life in the last two months (and I think I will do the same in the next reports). Little spoiler: it didn't go too good.

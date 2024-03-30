@@ -14,7 +14,6 @@ tags: [coding, spark, tutorial]
 #   caption: "Now, you can either have the washer and dryer where the lovely Smithers is standing, or you can trade it all in for what's in this box."
 #   relative: true
 ---
-prova
 
 In this article we’ll start to explore some basic functions belonging to Spark **DataFrame API**, in particular how to **read** and how to **write** **Spark DataFrames**.
 

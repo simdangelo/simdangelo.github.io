@@ -22,6 +22,13 @@
     </item>
     <item>
       <title>#7 DataFrame API#1: Read and Write DataFrames</title>
+      <link>https://simdangelo.github.io/blog/prova/</link>
+      <pubDate>Sat, 30 Mar 2024 00:00:00 +0000</pubDate>
+      <guid>https://simdangelo.github.io/blog/prova/</guid>
+      <description>Read and Write Spark DataFrames in several formats</description>
+    </item>
+    <item>
+      <title>#7 DataFrame API#1: Read and Write DataFrames</title>
       <link>https://simdangelo.github.io/blog/spark-dataframe-read-write/</link>
       <pubDate>Sat, 30 Mar 2024 00:00:00 +0000</pubDate>
       <guid>https://simdangelo.github.io/blog/spark-dataframe-read-write/</guid>

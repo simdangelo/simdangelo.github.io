@@ -1,0 +1,165 @@
+baseURL: https://simdangelo.github.io
+languageCode: en-us
+title: SimoneDangelo Blog
+theme: "PaperMod"
+
+languages:
+  en:
+    languageName: "English"
+    weight: 1
+    taxonomies:
+      category: categories
+      tag: tags
+      series: series
+    menu:
+      main:
+        - name: Archive
+          url: archives
+          weight: 5
+        - name: Search
+          url: search/
+          weight: 10
+        - name: Tags
+          url: tags/
+          weight: 10
+        - name: GitHub
+          url: https://github.com/simdangelo
+
+params:
+  env: production # to enable google analytics, opengraph, twitter-cards and schema.
+  # description: "Theme PaperMod - https://github.com/adityatelange/hugo-PaperMod"
+  author: Simone D'Angelo
+  author: ["Me", ]
+
+  defaultTheme: auto
+  # disableThemeToggle: true
+  # ShowShareButtons: true
+  ShowReadingTime: true
+  # disableSpecial1stPost: true
+  displayFullLangName: true
+  ShowPostNavLinks: true
+  ShowBreadCrumbs: true
+  ShowCodeCopyButtons: true
+  ShowRssButtonInSectionTermList: true
+  ShowAllPagesInArchive: true
+  ShowPageNums: true
+  ShowToc: true
+  # comments: true
+  images: ["images/papermod-cover.png"]
+
+  profileMode:
+    enabled: false
+    # title: PaperMod
+    imageUrl: "#"
+    imageTitle: my image
+    # imageWidth: 120
+    # imageHeight: 120
+    buttons:
+      - name: Archives
+        url: archives
+      - name: Tags
+        url: tags
+
+  homeInfoParams:
+    Title: " Hi there, I'm Simone"
+    # Content: >
+    #   - <br>
+
+    #   - Welcome to my Blog!
+
+    #   - <br>
+
+    #   - I'm Simone, aspiring to become a software engineer. This website serves as my personal space, dedicated to sharing posts about Data Engineering topics that align with my current studies.
+
+    #   - <br>
+
+    #   # - Please note that these posts are not tutorials. I am neither a professor nor a trainer; rather, they represent my personal notes that I've chosen to make public.
+    post_link: "/posts/presentation.md"
+    Content: >
+      - <br>
+
+      - Welcome to my Blog!
+
+      - <br>
+
+      - I'm Simone, an aspiring software engineer. This website is my personal space, where I'll be documenting my journey in the vast realm of software engineering. 
+
+      - <br>
+
+      - As of now, the content might be a bit unpredictable, but in the near future, I plan to share insights into my current studies, the courses I'm taking, and my progress in the field.
+
+      - <br>
+
+      - The overarching goal is to post monthly updates, reflecting on the achievements and challenges of the past month, and ensuring that I stay on track with the goals set in the previous month.
+
+      - <br>
+
+      - For a more in-depth understanding of who I am and my plans for this blog, I invite you to read the first post on my presentation page. It provides a detailed exploration of my background, aspirations, and the vision I have for this space.
+
+  socialIcons:
+    - name: github
+      title: View Source on Github
+      url: "https://github.com/simdangelo"
+    - name: linkedin
+      title: View Source on Github
+      url: "https://www.linkedin.com/in/simone-d-angelo-888b04223/"
+    # - name: Discord
+      # title: Join discord community
+      # url: "https://discord.gg/ahpmTvhVmp"
+    # - name: X
+      # title: Share PaperMod on X/Twitter
+      # url: "https://x.com/intent/tweet/?text=Checkout%20Hugo%20PaperMod%20%E2%9C%A8%0AA%20fast,%20clean,%20responsive%20Hugo%20theme.&url=https://github.com/adityatelange/hugo-PaperMod&hashtags=Hugo,PaperMod"
+    # - name: KoFi
+      # title: Buy me a Ko-Fi :)
+      # url: "https://ko-fi.com/adityatelange"
+
+  # editPost:
+  #   URL: "https://github.com/simdangelo/hugo-PaperMod/tree/exampleSite/content" # TODO: da cambiare
+  #   Text: "Suggest Changes" # edit text
+  #   appendFilePath: true # to append file path to Edit link
+
+  # outputs:
+  #     home:
+  #       - HTML
+  #       - RSS
+  #       - JSON
+  # fuseOpts:
+  #   isCaseSensitive: false
+  #   shouldSort: true
+  #   location: 0
+  #   distance: 1000
+  #   threshold: 0.4
+  #   minMatchCharLength: 0
+  #   keys: ["title", "permalink", "summary", "content"]
+
+  # label:
+  # iconSVG: '<svg xmlns="http://www.w3.org/2000/svg" height="25" viewBox="0 -960 960 960" fill="currentColor"><path d="M320-240h320v-80H320v80Zm0-160h320v-80H320v80ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z"/></svg>'
+  # text: "Home"
+  # icon: icon.png
+  # iconHeight: 35
+
+  # analytics:
+  #     google:
+  #         SiteVerificationTag: "XYZabc"
+
+  assets:
+    disableHLJS: true
+  #     favicon: "<link / abs url>"
+  #     favicon16x16: "<link / abs url>"
+  #     favicon32x32: "<link / abs url>"
+  #     apple_touch_icon: "<link / abs url>"
+  #     safari_pinned_tab: "<link / abs url>"
+
+  # cover:
+  #     hidden: true # hide everywhere but not in structured data
+  #     hiddenInList: true # hide on list pages and home
+  #     hiddenInSingle: true # hide on single page
+
+  # fuseOpts:
+  #     isCaseSensitive: false
+  #     shouldSort: true
+  #     location: 0
+  #     distance: 1000
+  #     threshold: 0.4
+  #     minMatchCharLength: 0
+  #     keys: ["title", "permalink", "summary", "content"]

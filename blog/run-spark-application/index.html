@@ -1,51 +1,474 @@
-<!doctype html><html lang=en dir=auto><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>#6 How to run Spark Applications in Scala on your local machine | SimoneDangelo Blog</title>
-<meta name=keywords content="coding,spark,tutorial"><meta name=description content="First Application with Apache Spark."><meta name=author content="Me"><link rel=canonical href=https://simdangelo.github.io/blog/run-spark-application/><link crossorigin=anonymous href=/assets/css/stylesheet.e4559b90ddde0017a53f9195be0e1bfa6c51510d85f13885c6fd5a54ee6029f8.css integrity="sha256-5FWbkN3eABelP5GVvg4b+mxRUQ2F8TiFxv1aVO5gKfg=" rel="preload stylesheet" as=style><link rel=icon href=https://simdangelo.github.io/favicon.ico><link rel=icon type=image/png sizes=16x16 href=https://simdangelo.github.io/favicon-16x16.png><link rel=icon type=image/png sizes=32x32 href=https://simdangelo.github.io/favicon-32x32.png><link rel=apple-touch-icon href=https://simdangelo.github.io/apple-touch-icon.png><link rel=mask-icon href=https://simdangelo.github.io/safari-pinned-tab.svg><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><link rel=alternate hreflang=en href=https://simdangelo.github.io/blog/run-spark-application/><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--code-block-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51)}.list{background:var(--theme)}.list:not(.dark)::-webkit-scrollbar-track{background:0 0}.list:not(.dark)::-webkit-scrollbar-thumb{border-color:var(--theme)}}</style></noscript><meta property="og:title" content="#6 How to run Spark Applications in Scala on your local machine"><meta property="og:description" content="First Application with Apache Spark."><meta property="og:type" content="article"><meta property="og:url" content="https://simdangelo.github.io/blog/run-spark-application/"><meta property="og:image" content="https://simdangelo.github.io/images/papermod-cover.png"><meta property="article:section" content="blog"><meta property="article:published_time" content="2024-03-23T00:00:00+00:00"><meta property="article:modified_time" content="2024-03-23T00:00:00+00:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://simdangelo.github.io/images/papermod-cover.png"><meta name=twitter:title content="#6 How to run Spark Applications in Scala on your local machine"><meta name=twitter:description content="First Application with Apache Spark."><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Blogs","item":"https://simdangelo.github.io/blog/"},{"@type":"ListItem","position":2,"name":"#6 How to run Spark Applications in Scala on your local machine","item":"https://simdangelo.github.io/blog/run-spark-application/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"#6 How to run Spark Applications in Scala on your local machine","name":"#6 How to run Spark Applications in Scala on your local machine","description":"First Application with Apache Spark.","keywords":["coding","spark","tutorial"],"articleBody":"In this article we’ll see how to set your local machine to run efficiently Spark Application with Scala API in IntelliJ IDE.\nThis guide has been tested on macOS 14.3 and on Windows 11.\nYou can find the code used in this mini-guide (and in the next ones) in the following associated repository: https://github.com/simdangelo/apache-spark-blog-tutorial.\n1. Install IntelliJ IDEA Community Edition Download IntelliJ IDEA Community Edition from the official JetBrains site (be careful not to install IntelliJ IDEA Ultimate which is a paid version): https://www.jetbrains.com/idea/download/.\nAfter the installation open it and, before starting any project, go in the Plugins tab and install Scala.\n2. Create a New Project After installing Scala plugin, go in the Projects tab and select New Project to open the new project window:\nIn this panel:\nchange the Name and Location with your preferences;\nselect Scala as Language and sbt as Build system. As Scala version I suggest you to choose the version 2.13 or 2.12. Don’t choose higher version because Spark is not compatible with Scala 3.0.\nas JDK you can have multiple choice, but the one that I am currently using and it works on my machine is corretto-11. If you have never downloaded Java on your machine, you probably don’t have any choices in the dropdown menu, so you can download some version directly from this menu simply by clicking on Add SDK in the dropdown menu and then select Download JDK:\nThen choose Amazon Corretto as Vendor and select the Version 11. Then click on Download:\nThen click on Create on the previous project creation window.\nWhat you should see after a while is the a window with your new project like:\n3. Install library dependencies To run Apache Spark Application in this configuration, we must set some dependencies on the build.sbt file. So, open the file and add these lines of code:\nval sparkVersion = \"3.5.0\" libraryDependencies ++= Seq( \"org.apache.spark\" %% \"spark-sql\" % sparkVersion, ) You should see something like:\nYou must now click on the symbol within the red circle to load the changes into the IntelliJ project and ensure that the dependencies work correctly. This operation could require some seconds to finish.\n4. Run your first Spark Application Let’s check if all these configurations work correctly by running our first Spark Application. Navigate to the Project tool window located on the left-hand side of the IDE and navigate to src/main/scala folder. Then right-click on the scala folder and from the context menu click on New and then Scala Class. Then click on Object and give a name to your first application:\nThen double click on Object.\nAfter creating the new file, it will open up for you to start writing your Spark Application. Simply type main, and IntelliJ will suggest pressing “Enter” on your keyboard to add the main function automatically:\nNow, we’re all set to begin writing our first Spark Application. It will be quite simple, just to ensure that all configurations are correctly set.\nLet’s start by creating an entry-point for Spark Applications with SparkSession:\nval spark = SparkSession.builder() .config(\"spark.master\", \"local\") .appName(\"First Spark Application\") .getOrCreate() Now we’ll create a basic DataFrame and show the contents in the console:\ndef printDF(): Unit = { val users_data = Seq( (\"Paolo\", \"Rossi\", 54, \"Italia\"), (\"John\", \"Doe\", 24, \"USA\"), ) val usersDF = spark.createDataFrame(users_data) usersDF.show() } Now, run the application by clicking on the Run symbol in the top bar of IntelliJ making sure that Current File is selected. You’ll be able to view the result in the console as shown in the following image. Please note that you’ll need to find the result among the logs printed there. Initially, it might appear that the application has encountered an error due to the volume of INFO logs printed, but it’s all right.\nThe final result you should see in the console is:\n5. Full code import org.apache.spark.sql.SparkSession object firstApplication { val spark = SparkSession.builder() .config(\"spark.master\", \"local\") .appName(\"First Spark Application\") .getOrCreate() def printDF(): Unit = { val users_data = Seq( (\"Paolo\", \"Rossi\", 54, \"Italia\"), (\"John\", \"Doe\", 24, \"USA\"), ) val usersDF = spark.createDataFrame(users_data) usersDF.show() } def main(args: Array[String]): Unit = { printDF() } } ","wordCount":"691","inLanguage":"en","image":"https://simdangelo.github.io/images/papermod-cover.png","datePublished":"2024-03-23T00:00:00Z","dateModified":"2024-03-23T00:00:00Z","author":[{"@type":"Person","name":"Me"}],"mainEntityOfPage":{"@type":"WebPage","@id":"https://simdangelo.github.io/blog/run-spark-application/"},"publisher":{"@type":"Organization","name":"SimoneDangelo Blog","logo":{"@type":"ImageObject","url":"https://simdangelo.github.io/favicon.ico"}}}</script></head><body id=top><script>localStorage.getItem("pref-theme")==="dark"?document.body.classList.add("dark"):localStorage.getItem("pref-theme")==="light"?document.body.classList.remove("dark"):window.matchMedia("(prefers-color-scheme: dark)").matches&&document.body.classList.add("dark")</script><header class=header><nav class=nav><div class=logo><a href=https://simdangelo.github.io/ accesskey=h title="SimoneDangelo Blog (Alt + H)">SimoneDangelo Blog</a><div class=logo-switches><button id=theme-toggle accesskey=t title="(Alt + T)"><svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg><svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu><li><a href=https://simdangelo.github.io/archives title=Archive><span>Archive</span></a></li><li><a href=https://simdangelo.github.io/search/ title=Search><span>Search</span></a></li><li><a href=https://simdangelo.github.io/tags/ title=Tags><span>Tags</span></a></li><li><a href=https://github.com/simdangelo title=GitHub><span>GitHub</span>&nbsp;<svg fill="none" shape-rendering="geometricPrecision" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" height="12" width="12"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg></a></li></ul></nav></header><main class=main><article class=post-single><header class=post-header><div class=breadcrumbs><a href=https://simdangelo.github.io/>Home</a>&nbsp;»&nbsp;<a href=https://simdangelo.github.io/blog/>Blogs</a></div><h1 class="post-title entry-hint-parent">#6 How to run Spark Applications in Scala on your local machine</h1><div class=post-meta><span title='2024-03-23 00:00:00 +0000 UTC'>March 23, 2024</span>&nbsp;·&nbsp;4 min&nbsp;·&nbsp;Me</div></header><div class=toc><details><summary accesskey=c title="(Alt + C)"><span class=details>Table of Contents</span></summary><div class=inner><ul><li><a href=#1-install-intellij-idea-community-edition aria-label="1. Install IntelliJ IDEA Community Edition">1. Install IntelliJ IDEA Community Edition</a></li><li><a href=#2-create-a-new-project aria-label="2. Create a New Project">2. Create a New Project</a></li><li><a href=#3-install-library-dependencies aria-label="3. Install library dependencies">3. Install library dependencies</a></li><li><a href=#4-run-your-first-spark-application aria-label="4. Run your first Spark Application">4. Run your first Spark Application</a></li><li><a href=#5-full-code aria-label="5. Full code">5. Full code</a></li></ul></div></details></div><div class=post-content><p>In this article we’ll see how to set your local machine to run efficiently <strong>Spark Application</strong> with <strong>Scala API</strong> in <strong>IntelliJ IDE</strong>.</p><p>This guide has been tested on macOS 14.3 and on Windows 11.</p><p>You can find the code used in this mini-guide (and in the next ones) in the following associated repository: <a href=https://github.com/simdangelo/apache-spark-blog-tutorial>https://github.com/simdangelo/apache-spark-blog-tutorial</a>.</p><h1 id=1-install-intellij-idea-community-edition>1. Install IntelliJ IDEA Community Edition<a hidden class=anchor aria-hidden=true href=#1-install-intellij-idea-community-edition>#</a></h1><p>Download IntelliJ IDEA Community Edition from the official JetBrains site (be careful not to install IntelliJ IDEA Ultimate which is a paid version): <a href="https://www.jetbrains.com/idea/download/?section=mac">https://www.jetbrains.com/idea/download/</a>.</p><p>After the installation open it and, before starting any project, go in the <strong>Plugins</strong> tab and install <strong>Scala</strong>.</p><h1 id=2-create-a-new-project>2. Create a New Project<a hidden class=anchor aria-hidden=true href=#2-create-a-new-project>#</a></h1><p>After installing Scala plugin, go in the <strong>Projects</strong> tab and select <strong>New Project</strong> to open the new project window:</p><p><img loading=lazy src=images/Untitled.png alt=Untitled></p><p>In this panel:</p><ul><li><p>change the <strong>Name</strong> and <strong>Location</strong> with your preferences;</p></li><li><p>select <strong>Scala</strong> as <strong>Language</strong> and <strong>sbt</strong> as <strong>Build system</strong>. As <strong>Scala</strong> version I suggest you to choose the version <strong>2.13</strong> or <strong>2.12</strong>. Don’t choose higher version because Spark is not compatible with Scala 3.0.</p></li><li><p>as <strong>JDK</strong> you can have multiple choice, but the one that I am currently using and it works on my machine is <strong>corretto-11</strong>. If you have never downloaded Java on your machine, you probably don’t have any choices in the dropdown menu, so you can download some version directly from this menu simply by clicking on <strong>Add SDK</strong> in the dropdown menu and then select <strong>Download JDK</strong>:</p><p><img loading=lazy src=images/Untitled%201.png alt=Untitled></p><p>Then choose <strong>Amazon Corretto</strong> as <strong>Vendor</strong> and select the <strong>Version</strong> <strong>11</strong>. Then click on <strong>Download:</strong></p><p><img loading=lazy src=images/Untitled%202.png alt=Untitled></p></li><li><p>Then click on <strong>Create</strong> on the previous project creation window.</p></li></ul><p>What you should see after a while is the a window with your new project like:</p><p><img loading=lazy src=images/Untitled%203.png alt=Untitled></p><h1 id=3-install-library-dependencies>3. Install library dependencies<a hidden class=anchor aria-hidden=true href=#3-install-library-dependencies>#</a></h1><p>To run Apache Spark Application in this configuration, we must set some dependencies on the <code>build.sbt</code> file. So, open the file and add these lines of code:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=display:flex><span><span style=color:#66d9ef>val</span> sparkVersion <span style=color:#66d9ef>=</span> <span style=color:#e6db74>&#34;3.5.0&#34;</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>libraryDependencies <span style=color:#f92672>++=</span> <span style=color:#a6e22e>Seq</span><span style=color:#f92672>(</span>
-</span></span><span style=display:flex><span>  <span style=color:#e6db74>&#34;org.apache.spark&#34;</span> <span style=color:#f92672>%%</span> <span style=color:#e6db74>&#34;spark-sql&#34;</span> <span style=color:#f92672>%</span> sparkVersion<span style=color:#f92672>,</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>)</span>
-</span></span></code></pre></div><p>You should see something like:</p><p><img loading=lazy src=images/Screenshot_2024-03-17_at_20.49.40.png alt="Screenshot 2024-03-17 at 20.49.40.png"></p><p>You must now click on the symbol within the red circle to load the changes into the IntelliJ project and ensure that the dependencies work correctly. This operation could require some seconds to finish.</p><h1 id=4-run-your-first-spark-application>4. Run your first Spark Application<a hidden class=anchor aria-hidden=true href=#4-run-your-first-spark-application>#</a></h1><p>Let’s check if all these configurations work correctly by running our first <strong>Spark Application</strong>. Navigate to the Project tool window located on the left-hand side of the IDE and navigate to <code>src/main/scala</code> folder. Then right-click on the <strong>scala</strong> folder and from the context menu click on <strong>New</strong> and then <strong>Scala Class</strong>. Then click on <strong>Object</strong> and give a name to your first application:</p><p><img loading=lazy src=images/Untitled%204.png alt=Untitled></p><p>Then double click on <strong>Object</strong>.</p><p>After creating the new file, it will open up for you to start writing your Spark Application. Simply type <code>main</code>, and IntelliJ will suggest pressing “<strong>Enter</strong>” on your keyboard to add the <code>main</code> function automatically:</p><p><img loading=lazy src=images/Untitled%205.png alt=Untitled></p><p>Now, we&rsquo;re all set to begin writing our first Spark Application. It will be quite simple, just to ensure that all configurations are correctly set.</p><p>Let’s start by creating an entry-point for Spark Applications with <code>SparkSession</code>:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=display:flex><span><span style=color:#66d9ef>val</span> spark <span style=color:#66d9ef>=</span> <span style=color:#a6e22e>SparkSession</span><span style=color:#f92672>.</span>builder<span style=color:#f92672>()</span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>.</span>config<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;spark.master&#34;</span><span style=color:#f92672>,</span> <span style=color:#e6db74>&#34;local&#34;</span><span style=color:#f92672>)</span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>.</span>appName<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;First Spark Application&#34;</span><span style=color:#f92672>)</span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>.</span>getOrCreate<span style=color:#f92672>()</span>
-</span></span></code></pre></div><p>Now we’ll create a basic DataFrame and show the contents in the console:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=display:flex><span><span style=color:#66d9ef>def</span> printDF<span style=color:#f92672>()</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Unit</span> <span style=color:#f92672>=</span> <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>  <span style=color:#66d9ef>val</span> users_data <span style=color:#66d9ef>=</span> <span style=color:#a6e22e>Seq</span><span style=color:#f92672>(</span>
-</span></span><span style=display:flex><span>    <span style=color:#f92672>(</span><span style=color:#e6db74>&#34;Paolo&#34;</span><span style=color:#f92672>,</span> <span style=color:#e6db74>&#34;Rossi&#34;</span><span style=color:#f92672>,</span> <span style=color:#ae81ff>54</span><span style=color:#f92672>,</span>  <span style=color:#e6db74>&#34;Italia&#34;</span><span style=color:#f92672>),</span>
-</span></span><span style=display:flex><span>    <span style=color:#f92672>(</span><span style=color:#e6db74>&#34;John&#34;</span><span style=color:#f92672>,</span> <span style=color:#e6db74>&#34;Doe&#34;</span><span style=color:#f92672>,</span> <span style=color:#ae81ff>24</span><span style=color:#f92672>,</span> <span style=color:#e6db74>&#34;USA&#34;</span><span style=color:#f92672>),</span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>)</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>  <span style=color:#66d9ef>val</span> usersDF <span style=color:#66d9ef>=</span> spark<span style=color:#f92672>.</span>createDataFrame<span style=color:#f92672>(</span>users_data<span style=color:#f92672>)</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>  usersDF<span style=color:#f92672>.</span>show<span style=color:#f92672>()</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>}</span>
-</span></span></code></pre></div><p>Now, run the application by clicking on the <code>Run</code> symbol in the top bar of IntelliJ making sure that <code>Current File</code> is selected. You&rsquo;ll be able to view the result in the console as shown in the following image. Please note that you&rsquo;ll need to find the result among the logs printed there. Initially, it might appear that the application has encountered an error due to the volume of <code>INFO</code> logs printed, but it’s all right.</p><p>The final result you should see in the console is:</p><p><img loading=lazy src=images/Untitled%206.png alt=Untitled></p><h1 id=5-full-code>5. Full code<a hidden class=anchor aria-hidden=true href=#5-full-code>#</a></h1><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-scala data-lang=scala><span style=display:flex><span><span style=color:#66d9ef>import</span> org.apache.spark.sql.SparkSession
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#66d9ef>object</span> <span style=color:#a6e22e>firstApplication</span> <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>	<span style=color:#66d9ef>val</span> spark <span style=color:#66d9ef>=</span> <span style=color:#a6e22e>SparkSession</span><span style=color:#f92672>.</span>builder<span style=color:#f92672>()</span>
-</span></span><span style=display:flex><span>    <span style=color:#f92672>.</span>config<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;spark.master&#34;</span><span style=color:#f92672>,</span> <span style=color:#e6db74>&#34;local&#34;</span><span style=color:#f92672>)</span>
-</span></span><span style=display:flex><span>    <span style=color:#f92672>.</span>appName<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;First Spark Application&#34;</span><span style=color:#f92672>)</span>
-</span></span><span style=display:flex><span>    <span style=color:#f92672>.</span>getOrCreate<span style=color:#f92672>()</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>  <span style=color:#66d9ef>def</span> printDF<span style=color:#f92672>()</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Unit</span> <span style=color:#f92672>=</span> <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>val</span> users_data <span style=color:#66d9ef>=</span> <span style=color:#a6e22e>Seq</span><span style=color:#f92672>(</span>
-</span></span><span style=display:flex><span>      <span style=color:#f92672>(</span><span style=color:#e6db74>&#34;Paolo&#34;</span><span style=color:#f92672>,</span> <span style=color:#e6db74>&#34;Rossi&#34;</span><span style=color:#f92672>,</span> <span style=color:#ae81ff>54</span><span style=color:#f92672>,</span>  <span style=color:#e6db74>&#34;Italia&#34;</span><span style=color:#f92672>),</span>
-</span></span><span style=display:flex><span>      <span style=color:#f92672>(</span><span style=color:#e6db74>&#34;John&#34;</span><span style=color:#f92672>,</span> <span style=color:#e6db74>&#34;Doe&#34;</span><span style=color:#f92672>,</span> <span style=color:#ae81ff>24</span><span style=color:#f92672>,</span> <span style=color:#e6db74>&#34;USA&#34;</span><span style=color:#f92672>),</span>
-</span></span><span style=display:flex><span>    <span style=color:#f92672>)</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>val</span> usersDF <span style=color:#66d9ef>=</span> spark<span style=color:#f92672>.</span>createDataFrame<span style=color:#f92672>(</span>users_data<span style=color:#f92672>)</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    usersDF<span style=color:#f92672>.</span>show<span style=color:#f92672>()</span>
-</span></span><span style=display:flex><span>  <span style=color:#f92672>}</span>
-</span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>  
-</span></span><span style=display:flex><span>  <span style=color:#66d9ef>def</span> main<span style=color:#f92672>(</span>args<span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Array</span><span style=color:#f92672>[</span><span style=color:#66d9ef>String</span><span style=color:#f92672>])</span><span style=color:#66d9ef>:</span> <span style=color:#66d9ef>Unit</span> <span style=color:#f92672>=</span> <span style=color:#f92672>{</span>
-</span></span><span style=display:flex><span>    printDF<span style=color:#f92672>()</span>
-</span></span><span style=display:flex><span>	<span style=color:#f92672>}</span>
-</span></span><span style=display:flex><span><span style=color:#f92672>}</span>
-</span></span></code></pre></div></div><footer class=post-footer><ul class=post-tags><li><a href=https://simdangelo.github.io/tags/coding/>Coding</a></li><li><a href=https://simdangelo.github.io/tags/spark/>Spark</a></li><li><a href=https://simdangelo.github.io/tags/tutorial/>Tutorial</a></li></ul><nav class=paginav><a class=prev href=https://simdangelo.github.io/blog/spark-dataframe-read-write/><span class=title>« Prev</span><br><span>#7 DataFrame API#1: Read and Write DataFrames</span>
-</a><a class=next href=https://simdangelo.github.io/blog/jan-mar-monthly-retrospective/><span class=title>Next »</span><br><span>#5 How did I do with my goals? Jan-Mar 2024</span></a></nav></footer></article></main><footer class=footer><span>&copy; 2024 <a href=https://simdangelo.github.io/>SimoneDangelo Blog</a></span>
-<span>Powered by
-<a href=https://gohugo.io/ rel="noopener noreferrer" target=_blank>Hugo</a> &
-        <a href=https://github.com/adityatelange/hugo-PaperMod/ rel=noopener target=_blank>PaperMod</a></span></footer><a href=#top aria-label="go to top" title="Go to Top (Alt + G)" class=top-link id=top-link accesskey=g><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentcolor"><path d="M12 6H0l6-6z"/></svg>
-</a><script>let menu=document.getElementById("menu");menu&&(menu.scrollLeft=localStorage.getItem("menu-scroll-position"),menu.onscroll=function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)}),document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();var t=this.getAttribute("href").substr(1);window.matchMedia("(prefers-reduced-motion: reduce)").matches?document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView():document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView({behavior:"smooth"}),t==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${t}`)})})</script><script>var mybutton=document.getElementById("top-link");window.onscroll=function(){document.body.scrollTop>800||document.documentElement.scrollTop>800?(mybutton.style.visibility="visible",mybutton.style.opacity="1"):(mybutton.style.visibility="hidden",mybutton.style.opacity="0")}</script><script>document.getElementById("theme-toggle").addEventListener("click",()=>{document.body.className.includes("dark")?(document.body.classList.remove("dark"),localStorage.setItem("pref-theme","light")):(document.body.classList.add("dark"),localStorage.setItem("pref-theme","dark"))})</script><script>document.querySelectorAll("pre > code").forEach(e=>{const n=e.parentNode.parentNode,t=document.createElement("button");t.classList.add("copy-code"),t.innerHTML="copy";function s(){t.innerHTML="copied!",setTimeout(()=>{t.innerHTML="copy"},2e3)}t.addEventListener("click",t=>{if("clipboard"in navigator){navigator.clipboard.writeText(e.textContent),s();return}const n=document.createRange();n.selectNodeContents(e);const o=window.getSelection();o.removeAllRanges(),o.addRange(n);try{document.execCommand("copy"),s()}catch{}o.removeRange(n)}),n.classList.contains("highlight")?n.appendChild(t):n.parentNode.firstChild==n||(e.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName=="TABLE"?e.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(t):e.parentNode.appendChild(t))})</script></body></html>
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>#6 How to run Spark Applications in Scala on your local machine | SimoneDangelo Blog</title>
+<meta name="keywords" content="coding, spark, tutorial">
+<meta name="description" content="First Application with Apache Spark.">
+<meta name="author" content="Me">
+<link rel="canonical" href="https://simdangelo.github.io/blog/run-spark-application/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.e4559b90ddde0017a53f9195be0e1bfa6c51510d85f13885c6fd5a54ee6029f8.css" integrity="sha256-5FWbkN3eABelP5GVvg4b&#43;mxRUQ2F8TiFxv1aVO5gKfg=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://simdangelo.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://simdangelo.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://simdangelo.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://simdangelo.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://simdangelo.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://simdangelo.github.io/blog/run-spark-application/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="#6 How to run Spark Applications in Scala on your local machine" />
+<meta property="og:description" content="First Application with Apache Spark." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://simdangelo.github.io/blog/run-spark-application/" />
+<meta property="og:image" content="https://simdangelo.github.io/images/papermod-cover.png" />
+<meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2024-03-23T00:00:00+00:00" />
+<meta property="article:modified_time" content="2024-03-23T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://simdangelo.github.io/images/papermod-cover.png" />
+<meta name="twitter:title" content="#6 How to run Spark Applications in Scala on your local machine"/>
+<meta name="twitter:description" content="First Application with Apache Spark."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Blogs",
+      "item": "https://simdangelo.github.io/blog/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "#6 How to run Spark Applications in Scala on your local machine",
+      "item": "https://simdangelo.github.io/blog/run-spark-application/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "#6 How to run Spark Applications in Scala on your local machine",
+  "name": "#6 How to run Spark Applications in Scala on your local machine",
+  "description": "First Application with Apache Spark.",
+  "keywords": [
+    "coding", "spark", "tutorial"
+  ],
+  "articleBody": "In this article we’ll see how to set your local machine to run efficiently Spark Application with Scala API in IntelliJ IDE.\nThis guide has been tested on macOS 14.3 and on Windows 11.\nYou can find the code used in this mini-guide (and in the next ones) in the following associated repository: https://github.com/simdangelo/apache-spark-blog-tutorial.\n1. Install IntelliJ IDEA Community Edition Download IntelliJ IDEA Community Edition from the official JetBrains site (be careful not to install IntelliJ IDEA Ultimate which is a paid version): https://www.jetbrains.com/idea/download/.\nAfter the installation open it and, before starting any project, go in the Plugins tab and install Scala.\n2. Create a New Project After installing Scala plugin, go in the Projects tab and select New Project to open the new project window:\nIn this panel:\nchange the Name and Location with your preferences;\nselect Scala as Language and sbt as Build system. As Scala version I suggest you to choose the version 2.13 or 2.12. Don’t choose higher version because Spark is not compatible with Scala 3.0.\nas JDK you can have multiple choice, but the one that I am currently using and it works on my machine is corretto-11. If you have never downloaded Java on your machine, you probably don’t have any choices in the dropdown menu, so you can download some version directly from this menu simply by clicking on Add SDK in the dropdown menu and then select Download JDK:\nThen choose Amazon Corretto as Vendor and select the Version 11. Then click on Download:\nThen click on Create on the previous project creation window.\nWhat you should see after a while is the a window with your new project like:\n3. Install library dependencies To run Apache Spark Application in this configuration, we must set some dependencies on the build.sbt file. So, open the file and add these lines of code:\nval sparkVersion = \"3.5.0\" libraryDependencies ++= Seq( \"org.apache.spark\" %% \"spark-sql\" % sparkVersion, ) You should see something like:\nYou must now click on the symbol within the red circle to load the changes into the IntelliJ project and ensure that the dependencies work correctly. This operation could require some seconds to finish.\n4. Run your first Spark Application Let’s check if all these configurations work correctly by running our first Spark Application. Navigate to the Project tool window located on the left-hand side of the IDE and navigate to src/main/scala folder. Then right-click on the scala folder and from the context menu click on New and then Scala Class. Then click on Object and give a name to your first application:\nThen double click on Object.\nAfter creating the new file, it will open up for you to start writing your Spark Application. Simply type main, and IntelliJ will suggest pressing “Enter” on your keyboard to add the main function automatically:\nNow, we’re all set to begin writing our first Spark Application. It will be quite simple, just to ensure that all configurations are correctly set.\nLet’s start by creating an entry-point for Spark Applications with SparkSession:\nval spark = SparkSession.builder() .config(\"spark.master\", \"local\") .appName(\"First Spark Application\") .getOrCreate() Now we’ll create a basic DataFrame and show the contents in the console:\ndef printDF(): Unit = { val users_data = Seq( (\"Paolo\", \"Rossi\", 54, \"Italia\"), (\"John\", \"Doe\", 24, \"USA\"), ) val usersDF = spark.createDataFrame(users_data) usersDF.show() } Now, run the application by clicking on the Run symbol in the top bar of IntelliJ making sure that Current File is selected. You’ll be able to view the result in the console as shown in the following image. Please note that you’ll need to find the result among the logs printed there. Initially, it might appear that the application has encountered an error due to the volume of INFO logs printed, but it’s all right.\nThe final result you should see in the console is:\n5. Full code import org.apache.spark.sql.SparkSession object firstApplication { val spark = SparkSession.builder() .config(\"spark.master\", \"local\") .appName(\"First Spark Application\") .getOrCreate() def printDF(): Unit = { val users_data = Seq( (\"Paolo\", \"Rossi\", 54, \"Italia\"), (\"John\", \"Doe\", 24, \"USA\"), ) val usersDF = spark.createDataFrame(users_data) usersDF.show() } def main(args: Array[String]): Unit = { printDF() } } ",
+  "wordCount" : "691",
+  "inLanguage": "en",
+  "image": "https://simdangelo.github.io/images/papermod-cover.png","datePublished": "2024-03-23T00:00:00Z",
+  "dateModified": "2024-03-23T00:00:00Z",
+  "author":[{
+    "@type": "Person",
+    "name": "Me"
+  }],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://simdangelo.github.io/blog/run-spark-application/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "SimoneDangelo Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://simdangelo.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://simdangelo.github.io/" accesskey="h" title="SimoneDangelo Blog (Alt + H)">SimoneDangelo Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://simdangelo.github.io/archives" title="Archive">
+                    <span>Archive</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://simdangelo.github.io/search/" title="Search">
+                    <span>Search</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://simdangelo.github.io/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://github.com/simdangelo" title="GitHub">
+                    <span>GitHub</span>&nbsp;
+                    <svg fill="none" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round"
+                        stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" height="12" width="12">
+                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+                        <path d="M15 3h6v6"></path>
+                        <path d="M10 14L21 3"></path>
+                    </svg>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://simdangelo.github.io/">Home</a>&nbsp;»&nbsp;<a href="https://simdangelo.github.io/blog/">Blogs</a></div>
+    <h1 class="post-title entry-hint-parent">
+      #6 How to run Spark Applications in Scala on your local machine
+    </h1>
+    <div class="post-meta"><span title='2024-03-23 00:00:00 +0000 UTC'>March 23, 2024</span>&nbsp;·&nbsp;4 min&nbsp;·&nbsp;Me
+
+</div>
+  </header> <div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#1-install-intellij-idea-community-edition" aria-label="1. Install IntelliJ IDEA Community Edition">1. Install IntelliJ IDEA Community Edition</a></li>
+                <li>
+                    <a href="#2-create-a-new-project" aria-label="2. Create a New Project">2. Create a New Project</a></li>
+                <li>
+                    <a href="#3-install-library-dependencies" aria-label="3. Install library dependencies">3. Install library dependencies</a></li>
+                <li>
+                    <a href="#4-run-your-first-spark-application" aria-label="4. Run your first Spark Application">4. Run your first Spark Application</a></li>
+                <li>
+                    <a href="#5-full-code" aria-label="5. Full code">5. Full code</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><p>In this article we’ll see how to set your local machine to run efficiently <strong>Spark Application</strong> with <strong>Scala API</strong> in <strong>IntelliJ IDE</strong>.</p>
+<p>This guide has been tested on macOS 14.3 and on Windows 11.</p>
+<p>You can find the code used in this mini-guide (and in the next ones) in the following associated repository: <a href="https://github.com/simdangelo/apache-spark-blog-tutorial">https://github.com/simdangelo/apache-spark-blog-tutorial</a>.</p>
+<h1 id="1-install-intellij-idea-community-edition">1. Install IntelliJ IDEA Community Edition<a hidden class="anchor" aria-hidden="true" href="#1-install-intellij-idea-community-edition">#</a></h1>
+<p>Download IntelliJ IDEA Community Edition from the official JetBrains site (be careful not to install IntelliJ IDEA Ultimate which is a paid version): <a href="https://www.jetbrains.com/idea/download/?section=mac">https://www.jetbrains.com/idea/download/</a>.</p>
+<p>After the installation open it and, before starting any project, go in the <strong>Plugins</strong> tab and install <strong>Scala</strong>.</p>
+<h1 id="2-create-a-new-project">2. Create a New Project<a hidden class="anchor" aria-hidden="true" href="#2-create-a-new-project">#</a></h1>
+<p>After installing Scala plugin, go in the <strong>Projects</strong> tab and select <strong>New Project</strong> to open the new project window:</p>
+<p><img loading="lazy" src="images/Untitled.png" alt="Untitled"  />
+</p>
+<p>In this panel:</p>
+<ul>
+<li>
+<p>change the <strong>Name</strong> and <strong>Location</strong> with your preferences;</p>
+</li>
+<li>
+<p>select <strong>Scala</strong> as <strong>Language</strong> and <strong>sbt</strong> as <strong>Build system</strong>. As <strong>Scala</strong> version I suggest you to choose the version <strong>2.13</strong> or <strong>2.12</strong>. Don’t choose higher version because Spark is not compatible with Scala 3.0.</p>
+</li>
+<li>
+<p>as <strong>JDK</strong> you can have multiple choice, but the one that I am currently using and it works on my machine is <strong>corretto-11</strong>. If you have never downloaded Java on your machine, you probably don’t have any choices in the dropdown menu, so you can download some version directly from this menu simply by clicking on <strong>Add SDK</strong> in the dropdown menu and then select <strong>Download JDK</strong>:</p>
+<p><img loading="lazy" src="images/Untitled%201.png" alt="Untitled"  />
+</p>
+<p>Then choose <strong>Amazon Corretto</strong> as <strong>Vendor</strong> and select the <strong>Version</strong> <strong>11</strong>. Then click on <strong>Download:</strong></p>
+<p><img loading="lazy" src="images/Untitled%202.png" alt="Untitled"  />
+</p>
+</li>
+<li>
+<p>Then click on <strong>Create</strong> on the previous project creation window.</p>
+</li>
+</ul>
+<p>What you should see after a while is the a window with your new project like:</p>
+<p><img loading="lazy" src="images/Untitled%203.png" alt="Untitled"  />
+</p>
+<h1 id="3-install-library-dependencies">3. Install library dependencies<a hidden class="anchor" aria-hidden="true" href="#3-install-library-dependencies">#</a></h1>
+<p>To run Apache Spark Application in this configuration, we must set some dependencies on the <code>build.sbt</code> file. So, open the file and add these lines of code:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-scala" data-lang="scala"><span style="display:flex;"><span><span style="color:#66d9ef">val</span> sparkVersion <span style="color:#66d9ef">=</span> <span style="color:#e6db74">&#34;3.5.0&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>libraryDependencies <span style="color:#f92672">++=</span> <span style="color:#a6e22e">Seq</span><span style="color:#f92672">(</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;org.apache.spark&#34;</span> <span style="color:#f92672">%%</span> <span style="color:#e6db74">&#34;spark-sql&#34;</span> <span style="color:#f92672">%</span> sparkVersion<span style="color:#f92672">,</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>You should see something like:</p>
+<p><img loading="lazy" src="images/Screenshot_2024-03-17_at_20.49.40.png" alt="Screenshot 2024-03-17 at 20.49.40.png"  />
+</p>
+<p>You must now click on the symbol within the red circle to load the changes into the IntelliJ project and ensure that the dependencies work correctly. This operation could require some seconds to finish.</p>
+<h1 id="4-run-your-first-spark-application">4. Run your first Spark Application<a hidden class="anchor" aria-hidden="true" href="#4-run-your-first-spark-application">#</a></h1>
+<p>Let’s check if all these configurations work correctly by running our first <strong>Spark Application</strong>. Navigate to the Project tool window located on the left-hand side of the IDE and navigate to <code>src/main/scala</code> folder. Then right-click on the <strong>scala</strong> folder and from the context menu click on <strong>New</strong> and then <strong>Scala Class</strong>. Then click on <strong>Object</strong> and give a name to your first application:</p>
+<p><img loading="lazy" src="images/Untitled%204.png" alt="Untitled"  />
+</p>
+<p>Then double click on <strong>Object</strong>.</p>
+<p>After creating the new file, it will open up for you to start writing your Spark Application. Simply type <code>main</code>, and IntelliJ will suggest pressing “<strong>Enter</strong>” on your keyboard to add the <code>main</code> function automatically:</p>
+<p><img loading="lazy" src="images/Untitled%205.png" alt="Untitled"  />
+</p>
+<p>Now, we&rsquo;re all set to begin writing our first Spark Application. It will be quite simple, just to ensure that all configurations are correctly set.</p>
+<p>Let’s start by creating an entry-point for Spark Applications with <code>SparkSession</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-scala" data-lang="scala"><span style="display:flex;"><span><span style="color:#66d9ef">val</span> spark <span style="color:#66d9ef">=</span> <span style="color:#a6e22e">SparkSession</span><span style="color:#f92672">.</span>builder<span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">.</span>config<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;spark.master&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;local&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">.</span>appName<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;First Spark Application&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">.</span>getOrCreate<span style="color:#f92672">()</span>
+</span></span></code></pre></div><p>Now we’ll create a basic DataFrame and show the contents in the console:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-scala" data-lang="scala"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> printDF<span style="color:#f92672">()</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Unit</span> <span style="color:#f92672">=</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">val</span> users_data <span style="color:#66d9ef">=</span> <span style="color:#a6e22e">Seq</span><span style="color:#f92672">(</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Paolo&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;Rossi&#34;</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">54</span><span style="color:#f92672">,</span>  <span style="color:#e6db74">&#34;Italia&#34;</span><span style="color:#f92672">),</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">(</span><span style="color:#e6db74">&#34;John&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;Doe&#34;</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">24</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;USA&#34;</span><span style="color:#f92672">),</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">val</span> usersDF <span style="color:#66d9ef">=</span> spark<span style="color:#f92672">.</span>createDataFrame<span style="color:#f92672">(</span>users_data<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  usersDF<span style="color:#f92672">.</span>show<span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>Now, run the application by clicking on the <code>Run</code> symbol in the top bar of IntelliJ making sure that <code>Current File</code> is selected. You&rsquo;ll be able to view the result in the console as shown in the following image. Please note that you&rsquo;ll need to find the result among the logs printed there. Initially, it might appear that the application has encountered an error due to the volume of <code>INFO</code> logs printed, but it’s all right.</p>
+<p>The final result you should see in the console is:</p>
+<p><img loading="lazy" src="images/Untitled%206.png" alt="Untitled"  />
+</p>
+<h1 id="5-full-code">5. Full code<a hidden class="anchor" aria-hidden="true" href="#5-full-code">#</a></h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-scala" data-lang="scala"><span style="display:flex;"><span><span style="color:#66d9ef">import</span> org.apache.spark.sql.SparkSession
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">object</span> <span style="color:#a6e22e">firstApplication</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">val</span> spark <span style="color:#66d9ef">=</span> <span style="color:#a6e22e">SparkSession</span><span style="color:#f92672">.</span>builder<span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">.</span>config<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;spark.master&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;local&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">.</span>appName<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;First Spark Application&#34;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">.</span>getOrCreate<span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> printDF<span style="color:#f92672">()</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Unit</span> <span style="color:#f92672">=</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">val</span> users_data <span style="color:#66d9ef">=</span> <span style="color:#a6e22e">Seq</span><span style="color:#f92672">(</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Paolo&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;Rossi&#34;</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">54</span><span style="color:#f92672">,</span>  <span style="color:#e6db74">&#34;Italia&#34;</span><span style="color:#f92672">),</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">(</span><span style="color:#e6db74">&#34;John&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;Doe&#34;</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">24</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;USA&#34;</span><span style="color:#f92672">),</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">val</span> usersDF <span style="color:#66d9ef">=</span> spark<span style="color:#f92672">.</span>createDataFrame<span style="color:#f92672">(</span>users_data<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    usersDF<span style="color:#f92672">.</span>show<span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">def</span> main<span style="color:#f92672">(</span>args<span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Array</span><span style="color:#f92672">[</span><span style="color:#66d9ef">String</span><span style="color:#f92672">])</span><span style="color:#66d9ef">:</span> <span style="color:#66d9ef">Unit</span> <span style="color:#f92672">=</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    printDF<span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://simdangelo.github.io/tags/coding/">Coding</a></li>
+      <li><a href="https://simdangelo.github.io/tags/spark/">Spark</a></li>
+      <li><a href="https://simdangelo.github.io/tags/tutorial/">Tutorial</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="prev" href="https://simdangelo.github.io/blog/spark-dataframe-read-write/">
+    <span class="title">« Prev</span>
+    <br>
+    <span>#7 DataFrame API#1: Read and Write DataFrames</span>
+  </a>
+  <a class="next" href="https://simdangelo.github.io/blog/jan-mar-monthly-retrospective/">
+    <span class="title">Next »</span>
+    <br>
+    <span>#5 How did I do with my goals? Jan-Mar 2024</span>
+  </a>
+</nav>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2024 <a href="https://simdangelo.github.io/">SimoneDangelo Blog</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

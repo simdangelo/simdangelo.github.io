@@ -6,6 +6,15 @@
     padding: var(--gap);
 }
 
+
+body {
+    font-family: sans-serif;
+    font-size: 18px;
+    line-height: 1.6;
+    word-break: break-word;
+    background: var(--theme);
+}
+
 .page-header h1 {
     font-size: 40px;
 }

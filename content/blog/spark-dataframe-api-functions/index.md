@@ -55,7 +55,11 @@ val spark = SparkSession.builder()
     .getOrCreate()
 
 // read a DataFrame
-val df: DataFrame = spark.read.parquet("src/main/resources/data/MT cars.parquet")
+val df: DataFrame = spark.read
+  .option("header", "true")
+  .option("delimiter", ",")
+  .option("inferSchema", "true")
+  .csv("src/main/resources/data/ebay_watches.csv")
 ```
 
 In addition, add these import declarations to make the following code work:

@@ -1,4 +1,20 @@
-# DataFrame API#2: Columns, Expressions, and Functions
+---
+title: "#8 DataFrame API#2: Columns, Expressions, and Functions"
+date: 2024-04-13
+# lastmod: 2022-07-15T15:03:31+02:00
+draft: false
+summary: Most commonly used functions in Spark.
+# categories: [curated lists]
+tags: [coding, spark, tutorial]
+# ShowToc: true
+# weight: 2
+# cover:
+#   image: "images/burns-mystery-box.jpg"
+#   alt: "burns-mystery-box.jpg"
+#   caption: "Now, you can either have the washer and dryer where the lovely Smithers is standing, or you can trade it all in for what's in this box."
+#   relative: true
+---
+
 
 # 1. Start the Project
 

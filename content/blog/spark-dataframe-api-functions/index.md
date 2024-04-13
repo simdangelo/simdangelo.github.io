@@ -633,8 +633,8 @@ These two functions are not really advanced functions, but I put them in this ca
 
 Both functions are used to remove duplicate rows from a DataFrame. The difference is that:
 
-- .distinct() operates on **all columns** in the DF;
-- dropDuplicates() can operate both on **entire DF** or on a **subset of columns**, by specifying them as arguments in string format.
+- `.distinct()` operates on **all columns** in the DF;
+- `.dropDuplicates()` can operate both on **entire DF** or on a **subset of columns**, by specifying them as arguments in string format.
 
 Let’s make these examples and we’ll analyze one by one:
 
@@ -664,4 +664,4 @@ val df_24_2_fix = df_clean
 
 - we created partitions by grouping by `itemLocation` and `lastUpdated_timestamp`, and ordering by `lastUpdated_timestamp`. In this way we forced the sorting so that we are sure not to remove duplicates randomly;
 - to each record in each partition we assigned an ascending integer, in particular we assign `1` to each record we want to keep in the new DF;
-- only records with a value of `1` are taken in each partition
+- only records with a value of `1` are taken in each partition.

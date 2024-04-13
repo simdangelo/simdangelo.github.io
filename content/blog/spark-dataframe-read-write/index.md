@@ -3,7 +3,7 @@ title: "#7 DataFrame API#1: Read and Write DataFrames"
 date: 2024-03-30
 # lastmod: 2022-07-15T15:03:31+02:00
 draft: false
-summary: Read and Write Spark DataFrames in several formats
+summary: Read and Write Spark DataFrames in several formats.
 # categories: [curated lists]
 tags: [coding, spark, tutorial]
 # ShowToc: true

@@ -179,7 +179,7 @@ val df5_2 = df
       .otherwise(col("seller")))
 ```
 
-## 2.3. Rename columns `.withColumnRenamed()`
+## 2.4. Rename columns `.withColumnRenamed()`
 
 The function `.withColumnRenamed()` takes two parameters:
 
@@ -195,7 +195,7 @@ val df6_2 = df.select(col("itemLocation").alias("item_location"))
 
 Of course in `df6` all columns are selected and one is renamed, while in `df6_2` only one column is selected and that one is renamed.
 
-## 2.4. Remove columns `.drop()`
+## 2.5. Remove columns `.drop()`
 
 Remove a column with `drop`:
 
@@ -203,7 +203,7 @@ Remove a column with `drop`:
 val df7 = df.drop("availableText", "item_location")
 ```
 
-## 2.5. Filter records `.filter()`
+## 2.6. Filter records `.filter()`
 
 There are several ways to filter a DF with `.filter()` function (or equivalently with `.where()`):
 
@@ -247,7 +247,7 @@ You can also use or keyword, or symbols (`&&` to use a boolean AND and `||` to u
 
 Note that `df9_3` uses `and` keyword without parenthesis because the `and` method is **infix** and this looks like more natural language.
 
-## 2.6. Order DataFrame rows `.orderBy()`
+## 2.7. Order DataFrame rows `.orderBy()`
 
 .orderBy() function is pretty simple: it returns a new DF with rows ordered by one or more columns. By default the order is ascending:
 
@@ -282,7 +282,7 @@ Here’s the result:
     ```
     
 
-## 2.6. Summary statistics `.min()`, `.max()`, `.avg()`
+## 2.8. Summary statistics `.min()`, `.max()`, `.avg()`
 
 The usage of these functions is pretty trivial, so let’s make an example right now:
 
@@ -300,7 +300,7 @@ Here’s the result:
 val df_summary_casting = df.select(min(col("sold").cast("int")), max(col("sold").cast("int")), avg(col("sold").cast("int")))
 ```
 
-## 2.7. Union more DataFrames
+## 2.9. Union more DataFrames
 
 ### `.union()`
 
@@ -334,7 +334,7 @@ The result is:
 
 As you can see, since there are no common columns between the two DFs, Spark add all the columns of `df_sales` that are missing on `df`.
 
-## 2.8. Convert string to data and timestamp types `.to_date()` and `.to_timestamp()`
+## 2.10. Convert string to data and timestamp types `.to_date()` and `.to_timestamp()`
 
 When we imported the csv file at the beginning of this post, we used `.option("inferSchema", "true")`. As I suggested in one of the previous post in this blog, it’s not suggested to use this option, but instead to use `.schema(csvSchema)` to manually assign a data type to each column. In our particular case, the `lastUpdated` column contains timestamp values, but if we print the schema we see that Spark assigns a string data type to that column. So functions `.to_date()` and `.to_timestamp()` allow us to convert a column in a data or timestamp data type. Let’s convert `lastUpdated` into both date and timestamp columns:
 
@@ -350,7 +350,7 @@ Then let’s print the schema and the first 5 rows of `df11` (we’ll print only
 
 ![Untitled](images/Untitled%2010.png)
 
-## 2.9. Convert date or timestamp to string `date_format()`
+## 2.11. Convert date or timestamp to string `date_format()`
 
 If you have a date or timestamp Column, you can convert it to a desirable string formats. Firstly, let’s create a new DF on which we’ll apply these functions:
 
@@ -388,7 +388,7 @@ Here’s the result:
 
 ![Untitled](images/Untitled%2011.png)
 
-## 2.9. Extract a substring `.substring()`
+## 2.12. Extract a substring `.substring()`
 
 `substring()` function is used to extract the substring from a DataFrame string column by providing the position and length of the string you wanted to extract. Let’s say we want to change `itemNumber` column by extracting only the first 5 characters:
 
@@ -401,7 +401,7 @@ Here’s the result:
 
 ![Untitled](images/Untitled%2012.png)
 
-## 2.10. Remove white spaces `.trim()`
+## 2.13. Remove white spaces `.trim()`
 
 Let’s create a new DF just to highlight the problems we want to solve with `.trim()` function:
 
@@ -430,7 +430,7 @@ Here’s the result:
 
 ![Untitled](images/Untitled%2013.png)
 
-## 2.11. Pad a string `.lpad()` and `.rpad()`
+## 2.14. Pad a string `.lpad()` and `.rpad()`
 
 The `.lpad()` function used to left-pad a string column with a specified character or characters to reach a desired length. Considering that the maximum value of sold column is 1372 let’s say we want that all numbers must have 4 digits. This means that 1-digit numbers need three leading 0, 2-digit numbers need 2 leading zeros, 3-digit numbers need 1 leading zero:
 
@@ -444,7 +444,7 @@ Here’s the result:
 
 The functioning of `.rpad()` is exactly the same, but the pad happens to the right-side.
 
-## 2.12. Concatenate strings `.concat()` and `.concat_ws()`
+## 2.15. Concatenate strings `.concat()` and `.concat_ws()`
 
 Let’s say you want to create a new column by concatenating two or more existing columns. I have two options:
 
@@ -480,7 +480,7 @@ Here’s the result:
     - `.concat()` produces a null value;
     - `.concat_ws()` produces a an empty string.
 
-## 2.13. Replace part of string with another string `.regexp_replace()`
+## 2.16. Replace part of string with another string `.regexp_replace()`
 
 `.regexp_replace()` is a function that is used to replace part of a string (substring) value with another string on DataFrame column by using regular expression (regex). Let’s say I want to reaplace $ symbol with € symbol in `priceWithCurrency` column:
 
@@ -507,7 +507,7 @@ Here’s the result:
 
 ![Untitled](images/Untitled%2017.png)
 
-## 2.9. Create an array of strings `.split()`
+## 2.17. Create an array of strings `.split()`
 
 The `.split()` method returns a new Column object that represents an array of strings. Each element in the array is a substring of the original column that was split using the specified pattern. Of course you can also create other columns extracting elements from that list or, for instance, concatenate them:
 

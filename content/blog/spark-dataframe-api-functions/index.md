@@ -32,8 +32,8 @@ The two functions that are used to do that are: `.select()` and `selectExpr()`. 
 
 Before diving into the syntax of each function, let’s describe briefly what these functions do internally and then we’ll represent them graphically. Remember that Spark DataFrames are split in partitions in between nodes and the cluster so, when I use a select function to select any number of columns from a DF, those columns are being selected on every partition on every node where the DF resides. After the selections, you will obtain a new DF with those columns and that will be reflected on every node in the cluster. As I described in one of the last posts in this blog, these functions represent a Transformation, specifically a **Narrow Transformation:**
 
-- Transformation because
-- Narrow because every partition in the original DF has exactly one corresponding output partition in the resulting DF.
+- **Transformation** because it is an operation applied to an RDD that results in the creation of a new RDD and Spark does not immediately compute the result until an **Action** is called.
+- **Narrow** because every partition in the original DF has exactly one corresponding output partition in the resulting DF.
 
 Let’s represent it graphically:
 

@@ -26,7 +26,7 @@ If you're interested in learning how to create a new Spark project in Scala, ref
 
 ## 2.1. Select columns
 
-Selecting columns is perhaps the most used operation is Spark.
+**Selecting columns of a DataFrame** is perhaps the most used operation is Spark.
 
 The two functions that are used to do that are: `.select()` and `selectExpr()`. As you’ll see there are no practical reasons to choose one instead of the other, so feel free to use the one that you prefer. Whatever you choose, I suggest you to stay consistent with your choice in all your code to improve the readability. Just to say, `.select()` is by far the most used one.
 

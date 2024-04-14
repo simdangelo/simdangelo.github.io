@@ -26,7 +26,7 @@ If you're interested in learning how to create a new Spark project in Scala, ref
 
 ## 2.1. Select columns
 
-Selecting columns is perhaps the most used function is Spark and it is used to **select columns of a DataFrame**.
+Selecting columns is perhaps the most used operation is Spark.
 
 The two functions that are used to do that are: `.select()` and `selectExpr()`. As you’ll see there are no practical reasons to choose one instead of the other, so feel free to use the one that you prefer. Whatever you choose, I suggest you to stay consistent with your choice in all your code to improve the readability. Just to say, `.select()` is by far the most used one.
 
@@ -253,7 +253,7 @@ Note that `df9_3` uses `and` keyword without parenthesis because the `and` metho
 
 ## 2.7. Order DataFrame rows `.orderBy()`
 
-.orderBy() function is pretty simple: it returns a new DF with rows ordered by one or more columns. By default the order is ascending:
+`.orderBy()` function is pretty simple: it returns a new DF with rows ordered by one or more columns. By default the order is ascending:
 
 ```scala
 val orderBy = df
@@ -651,7 +651,7 @@ val df13_2 = df.dropDuplicates("itemLocation", "seller")
     
     ![Untitled](images/Untitled%2024.png)
     
-- `df13_2` is the tricky one: `.dropDuplicates()` will only consider the `itemLocation` and `seller` columns when identifying duplicates, and it will keep a **random occurrence of each duplicate**. This is the tricky part. When the DF is split across partitions, you don’t know which occurrence Spark decides to keep (maybe there is an order, but honestly I didn’t find it). `.dropDuplicates()` keeps the first occurrence only if there is 1 partition. So be careful when using this function. If you want to keep the first occurrence though there is a solution that I’ll explain in one of the next paragraph because we need to introduce first `window` function.
+- `df13_2` is the tricky one: `.dropDuplicates()` will only consider the `itemLocation` and `seller` columns when identifying duplicates, and it will keep a **random occurrence of each duplicate**. This is the tricky part. When the DF is split across partitions, you don’t know which occurrence Spark decides to keep (maybe there is an order, but honestly I didn’t find it). `.dropDuplicates()` keeps the first occurrence only if there is 1 partition. So be careful when using this function.
 
 We can remedy this problem by using a window function, specifically a `.row_number()` function. What we have to do is force the sorting we want so that we take the specific record we are interested in and eliminate all other duplicates:
 

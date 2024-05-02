@@ -15,6 +15,11 @@ tags: [coding, spark, tutorial]
 #   relative: true
 ---
 
+# 0. Resources
+
+- “Spark Essentials with Scala” course by Daniel Ciocîrlan (link here: [https://rockthejvm.com/p/spark-essentials](https://rockthejvm.com/p/spark-essentials))
+- https://sparkbyexamples.com/
+
 
 # 1. Start the Project
 
@@ -39,7 +44,7 @@ Let’s represent it graphically:
 
 ![Untitled](images/Untitled.png)
 
-Source: “Spark Essentials with Scala” course by Daniel Ciocîrlan (link here: https://rockthejvm.com/p/spark-essentials)
+*Source: “Spark Essentials with Scala” course by Daniel Ciocîrlan (link here: https://rockthejvm.com/p/spark-essentials)*
 
 
 Note: The technical term for a selection is **Projection**. So we are projecting the DF into a new DF. Projection is a term used from the theory of databases.

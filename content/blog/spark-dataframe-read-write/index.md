@@ -23,7 +23,7 @@ You can find the code used in this mini-guide (and in the next ones) in the foll
 
 Note that a section of this guide requires to spin up a Docker Container, so you have to install Docker Desktop on your machine.
 
-# 0. Resources:
+# 0. Resources
 
 - “Spark Essentials with Scala” course by Daniel Ciocîrlan (link here: [https://rockthejvm.com/p/spark-essentials](https://rockthejvm.com/p/spark-essentials))
 - Learning Spark: Lightning-Fast Data Analytics - Jules S. Damji, Brooke Wenig, Tathagata Das, and Denny Lee (Second Edition 2020, O'Reilly Media)

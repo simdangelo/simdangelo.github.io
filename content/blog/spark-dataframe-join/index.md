@@ -39,9 +39,9 @@ In Spark Joins are **wide transformations**. In order to compute a join, Spark s
 
 This is why I want to address topics like Optimization in the future: because joins can potentially degrade performance if not well managed.
 
-# 3. Types of Joins
+# 3. Types of Join
 
-Let’s create a new Scala file by creating a new Object (as I explained in my previous post here [https://simdangelo.github.io/blog/spark-tutorial-1/](https://simdangelo.github.io/blog/spark-tutorial-1/)) and we call it `Joins`.
+Let’s create a new Scala file by creating a new Object (again look at this [https://simdangelo.github.io/blog/run-spark-application/](https://simdangelo.github.io/blog/run-spark-application/)) and we call it `Join`.
 
 Then let’s start with the usual configuration:
 

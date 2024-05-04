@@ -15,7 +15,7 @@ tags: [coding, spark, tutorial]
 #   relative: true
 ---
 
-# 0. Resources
+# 0. Resources:
 
 - “Spark Essentials with Scala” course by Daniel Ciocîrlan (link here: [https://rockthejvm.com/p/spark-essentials](https://rockthejvm.com/p/spark-essentials))
 - https://sparkbyexamples.com/

@@ -1,5 +1,5 @@
 ---
-title: "#1 Presentation (pinned)"
+title: "Presentation (pinned)"
 date: 2024-01-07
 # lastmod: 2022-07-15T15:03:31+02:00
 draft: false

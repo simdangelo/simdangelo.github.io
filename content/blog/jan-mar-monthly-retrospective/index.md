@@ -1,5 +1,5 @@
 ---
-title: "#5 How did I do with my goals? Jan-Mar 2024"
+title: "How did I do with my goals? Jan-Mar 2024"
 date: 2024-03-16
 # lastmod: 2022-07-15T15:03:31+02:00
 draft: false

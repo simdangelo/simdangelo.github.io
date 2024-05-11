@@ -1,5 +1,5 @@
 ---
-title: "#2 Current studies"
+title: "Current studies"
 date: 2024-01-13
 # lastmod: 2022-07-15T15:03:31+02:00
 draft: false
@@ -39,7 +39,7 @@ Learning Scala will not be easy. It's widely regarded as a very difficult progra
 
 Hello everyone,
 
-As mentioned in the introductory article of this blog, I'm here to transparently share details about my current studies. Specifically, I'll provide a link redirecting to my Notion personal page ([click here](https://bright-spaghetti-b27.notion.site/9983c45166cb4c8d9a14fc10f1b1f149?v=53478b87968f4f76855aedc3cf82236d&pvs=4)), where you can find a list of courses I've taken or currently enrolled in, along with brief descriptions and additional details.
+As mentioned in the introductory article of this blog, I'm here to transparently share details about my current studies.
 
 At the moment of writing (January 2024), my focus is on two main topics:
 

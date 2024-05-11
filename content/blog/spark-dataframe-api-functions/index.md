@@ -1,5 +1,5 @@
 ---
-title: "#8 DataFrame API#2: Columns, Expressions, and Functions"
+title: "DataFrame API#2: Columns, Expressions, and Functions"
 date: 2024-04-13
 # lastmod: 2022-07-15T15:03:31+02:00
 draft: false

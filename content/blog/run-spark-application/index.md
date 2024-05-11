@@ -1,5 +1,5 @@
 ---
-title: "#6 How to run Spark Applications in Scala on your local machine"
+title: "How to run Spark Applications in Scala on your local machine"
 date: 2024-03-23
 # lastmod: 2022-07-15T15:03:31+02:00
 draft: false

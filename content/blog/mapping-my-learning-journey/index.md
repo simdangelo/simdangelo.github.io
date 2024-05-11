@@ -27,6 +27,6 @@ This is the link ([click here](https://www.notion.so/Learning-Progess-70ce133aa9
 
 The page is divided into three different tables:
 
-- **Video Courses / YouTube playlist**: In this section I collected all the video courses I0ve taken, am currently taking, or plan to take. Some of them are free (from YouTube), while others are paid course coming from various platforms. I've also made notes for many of these courses, which I'll be sharing over time.
+- **Video Courses / YouTube playlist**: In this section, I collected all the video courses I've taken, am currently taking, or plan to take. Some of them are free (from YouTube), while others are paid course coming from various platforms. I've also made notes for many of these courses, which I'll be sharing over time.
 - **Books**: This section lists all the books I've used, am currently using, or plan to use to delve deeper into certain topics. Unlike the Video Courses / YouTube Playlist, my goal isn't necessarily to read these books cover to cover, but rather to extract the information I need to clarify specific topics.
 - **Blog Articles**: Here, I've compiled articles that I find useful to read and know about. These articles serve as additional resources to complement my learning journey.

@@ -1,5 +1,5 @@
 ---
-title: "#Scala learning path"
+title: "Scala learning path"
 date: 2024-02-16
 # lastmod: 2022-07-15T15:03:31+02:00
 draft: false

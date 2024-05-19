@@ -1,5 +1,5 @@
 ---
-title: "DataFrame API#3: Join"
+title: "LearningNoteSeries - DataFrame API#3: Join"
 date: 2024-05-04
 # lastmod: 2022-07-15T15:03:31+02:00
 draft: false

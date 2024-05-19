@@ -1,5 +1,5 @@
 ---
-title: "DataFrame API#1: Read and Write DataFrames"
+title: "LearningNoteSeries - DataFrame API#1: Read and Write DataFrames"
 date: 2024-03-30
 # lastmod: 2022-07-15T15:03:31+02:00
 draft: false

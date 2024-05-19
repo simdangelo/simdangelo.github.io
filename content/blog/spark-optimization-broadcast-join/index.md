@@ -22,19 +22,23 @@ tags: [coding, spark, tutorial]
 - “Spark Optimization with Scala” course by Daniel Ciocîrlan (link here: [https://rockthejvm.com/p/spark-optimization](https://rockthejvm.com/p/spark-optimization))
 - High Performance Spark: Best Practices for Scaling and Optimizing Apache Spark (by Holden Karau, Rachel Warren)
 
-# 1. Introduction
+# 1. Start the Project
+
+If you’re interested in learning how to create a new Spark project in Scala, refer to the initial blog post on Spark available at the following link: https://simdangelo.github.io/blog/run-spark-application/. In this guide, we utilize the same project that was used in previous tutorials and will continue to use in future ones. You can download this project from the following repository: https://github.com/simdangelo/apache-spark-blog-tutorial.
+
+# 2. Introduction
 
 As we already said in the last post specifically about joins, **Joins** are used to **combine data from multiple DataFrames.** In Spark, Joins are **wide transformations**. In order to compute a join, Spark scans the entire DataFrame across the entire cluster, so data is going to be moved around between various Spark nodes. So this involves shuffling, which is **expensive** for performance.
 
 **Note**: Managing joins requires different considerations between **Spark Core** and **Spark SQL**. Handling joins in Spark Core can be more challenging. For example, the ordering of operations is crucial since the DAG optimizer, unlike the SQL optimizer, cannot re-order operations or push down filters. Typically, we avoid using Spark Core because managing RDDs is not generally recommended. Instead, the Spark DataFrame API from the Spark SQL component is widely used. So, even tough with DataFrame API we’ll have less control on the low-level operations (and I’ll mention which these operations are in the next paragraphs), we’re happy to use it because the SQL Optimizer can help us a lot with automatic optimizations.
 
-# 2. Why are Joins Slow?
+# 3. Why are Joins Slow?
 
 Joins are expensive because they require that corresponding keys from each RDD (remember: a DataFrame is an RDD under the hood) are located at the same partition so that they can be combined locally.
 
 Before exploring the main three scenarios we may encounter when joining two tables, let’s define what a Partitioner is because we need this concept to understand what will happen. A **Partitioner** is an abstraction that specifies the way data should be split or partitioned among the nodes in a cluster. If I’ll find enough information on this topic, I’ll dedicate a single post to it.
 
-## 2.1. Scenario 1: Shuffle Join
+## 3.1. Scenario 1: Shuffle Join
 
 The worst possible scenario is that both **RDDs do not have a known partitioner**. In this case a **shuffle** is needed because the rows with the same key need to be on the same partition on the same executor. Main characteristics:
 
@@ -52,7 +56,7 @@ Graphically:
 ![Untitled](images/Untitled.png)
 *Source: High Performance Spark: Best Practices for Scaling and Optimizing Apache Spark*
 
-## 2.2. Scenario 2: **Co-Partitioned RDDs**
+## 3.2. Scenario 2: **Co-Partitioned RDDs**
 
 Both RDDs have the **same partitioner**. Both RDDs are said to be **Co-Partitioned**.
 
@@ -66,7 +70,7 @@ In terms of diagram:
 
 As you can see, both RDD A and RDD B are partitioned in the exact same way and so the executors only need to load those partitions in memory and then do the join in memory.
 
-## 2.2. Scenario 3: **Co-Located RDDs**
+## 3.3. Scenario 3: **Co-Located RDDs**
 
 Both RDDs are not only **co-partitioned**, but the partitions are already load in memory on the executors. Both  RDDs are said to be **Co-Located**.
 
@@ -80,9 +84,9 @@ In terms of diagram:
 ![Untitled](images/Untitled%202.png)
 *Source: High Performance Spark: Best Practices for Scaling and Optimizing Apache Spark*
 
-# 3. Broadcast Joins
+# 4. Broadcast Joins
 
-## 3.1. Practical Usage
+## 4.1. Practical Usage
 
 Then let’s start with the usual configuration:
 
@@ -175,7 +179,7 @@ Notice that there is a step called `BroadcastExchange` that seems like a shuffle
 
 This **Broadcast Join** took **less than a second** (remember the “classic” join took about 17 seconds).
 
-## 3.2. Theoretical Explanation
+## 4.2. Theoretical Explanation
 
 This job takes to little time because we’re employing a technique known as a **Broadcast Join**, where the smaller DF, instead of being shuffled causing the bigger DF to be shuffled as well, is being copied entirely to all the executors that are processing the join. So the **bigger DF doesn’t need to be shuffled** again because all the executors have the entire smaller DF to compare to.
 

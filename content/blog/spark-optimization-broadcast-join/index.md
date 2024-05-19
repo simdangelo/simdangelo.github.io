@@ -1,6 +1,6 @@
 ---
 title: "LearningNoteSeries - SparkOptimization#1: Broadcast Joins"
-date: 2024-04-19
+date: 2024-05-19
 # lastmod: 2022-07-15T15:03:31+02:00
 draft: false
 summary: Why Joins are slow and Broadcast Join.

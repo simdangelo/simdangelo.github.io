@@ -1,5 +1,5 @@
 ---
-title: "LearningNoteSeries - SparkOptimization#1: Broadcast Joins"
+title: "LearningNoteSeries - Spark Optimization#1: Broadcast Joins"
 date: 2024-05-19
 # lastmod: 2022-07-15T15:03:31+02:00
 draft: false

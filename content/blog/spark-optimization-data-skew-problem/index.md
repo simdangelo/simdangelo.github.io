@@ -138,8 +138,8 @@ From these pictures, we can clearly observe the **Data Skew problem**, where par
 
 **Adaptive Query Execution (AQE)** is an optimization technique in Spark SQL that makes use of the runtime statistics to choose the most efficient query execution plan, which is enabled by default since Apache Spark 3.2.0. Statistics can be:
 
-- # of bytes read (basically the size of your input dataset)
-- # of partitions
+- \# of bytes read (basically the size of your input dataset)
+- \# of partitions
 
 The kind of tuning that AQE gives us is among the following three:
 

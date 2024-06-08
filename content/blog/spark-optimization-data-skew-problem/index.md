@@ -15,9 +15,17 @@ tags: [coding, spark, tutorial]
 #   relative: true
 ---
 
-# 1. Data Skew
+# 0. Resources
 
-## 1.1. Data Skew explained
+- "Afaque Ahmad" YouTube channel: https://www.youtube.com/@afaqueahmad7117/featured
+
+# 1. Start the Project
+
+If you’re interested in learning how to create a new Spark project in Scala, refer to the initial blog post on Spark available at the following link: https://simdangelo.github.io/blog/run-spark-application/. In this guide, we utilize the same project that was used in previous tutorials and will continue to use in future ones. You can download this project from the following repository: https://github.com/simdangelo/apache-spark-blog-tutorial.
+
+# 2. Data Skew
+
+## 2.1. Data Skew explained
 
 **When does Data Skew happens?**
 
@@ -60,7 +68,7 @@ Let’s try to give a definition to **Data Skew**: In Apache Spark, the Data Ske
 - uneven utilization of resources (cores are sitting IDLE as we have seen before)
 - Out Of Memory Errors
 
-## 1.2. Data Skew example
+## 2.2. Data Skew example
 
 Let’s start by creating a new Scala file called DataSkew and let’s write the usual configuration:
 
@@ -132,7 +140,7 @@ You can also look at the Summary Metrics table where it’s clear that the Media
 
 From these pictures, we can clearly observe the **Data Skew problem**, where parallelism is severely compromised: only one core is active while the others remain IDLE, resulting in parallelism dropping to 1 after a certain point. In contrast, the ideal scenario is where all cores work simultaneously, utilizing parallelism to its fullest extent.
 
-# 2. Solutions
+# 3. Solutions
 
 ## Solution 1: **Adaptive Query Execution (AQE)**
 
